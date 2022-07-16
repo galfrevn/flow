@@ -1,27 +1,52 @@
 // NextJS, React & Types
-import { NextPage } from "next";
+import {
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+  NextPage,
+} from "next";
 
 // Styling
-import { Container, Text } from "@nextui-org/react";
+import { Container, Loading } from "@nextui-org/react";
 
 // Auth
-import { useSession } from "next-auth/react";
-import LoadingScreen from "../components/LoadingScreen";
+import { getSession } from "next-auth/react";
+import { Fragment } from "react";
+import Header from "components/Header";
 
-const App: NextPage = () => {
-  const { data, status } = useSession();
-
-  if (status === "loading") return <LoadingScreen />;
+const Home: NextPage = ({
+  session,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  console.log(session);
 
   return (
-    <Container>
-      <Text>{data?.user?.name}</Text>
-      <img
-        src={data?.user?.image as string}
-        alt={`${data?.user?.name} profile picture`}
-      />
-    </Container>
+    <div>
+      {session ? (
+        <Fragment>
+          <Header {...session} />
+        </Fragment>
+      ) : (
+        <Loading color="error" />
+      )}
+    </div>
   );
 };
 
-export default App;
+export default Home;
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const session = await getSession(ctx);
+
+  if (!session)
+    return {
+      redirect: {
+        destination: "/auth/signin",
+        permanent: false,
+      },
+    };
+
+  return {
+    props: {
+      session,
+    },
+  };
+};

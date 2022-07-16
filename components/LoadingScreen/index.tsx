@@ -1,4 +1,4 @@
-import { FullScreenContainer } from "./styled-components";
+import { FullScreenContainer } from "./styles";
 import { Loading, Text } from "@nextui-org/react";
 
 const LoadingScreen = () => {
