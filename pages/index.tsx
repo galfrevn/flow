@@ -23,10 +23,10 @@ const Home: NextPage = ({
   return (
     <Fragment>
       {session ? (
-        <Container css={{ padding: "$18 $0" }} fluid as="main">
+        <main>
           <Header {...session} />
           <Feed />
-        </Container>
+        </main>
       ) : (
         <Loading color="error" />
       )}

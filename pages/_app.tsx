@@ -3,11 +3,21 @@ import type { AppProps } from "next/app";
 
 // Styling
 import { createTheme, NextUIProvider } from "@nextui-org/react";
+import { ThemeProvider } from "next-themes";
 
 // Auth
 import { SessionProvider } from "next-auth/react";
 
-const theme = createTheme({
+const lightTheme = createTheme({
+  type: "light",
+  theme: {
+    fonts: {
+      sans: "Poppins, sans-serif",
+    },
+  },
+});
+
+const darkTheme = createTheme({
   type: "dark",
   theme: {
     fonts: {
@@ -18,11 +28,20 @@ const theme = createTheme({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <SessionProvider>
-      <NextUIProvider theme={theme}>
-        <Component {...pageProps} />
+    <ThemeProvider
+      defaultTheme="system"
+      attribute="class"
+      value={{
+        light: lightTheme.className,
+        dark: darkTheme.className,
+      }}
+    >
+      <NextUIProvider>
+        <SessionProvider>
+          <Component {...pageProps} />
+        </SessionProvider>
       </NextUIProvider>
-    </SessionProvider>
+    </ThemeProvider>
   );
 }
 
