@@ -11,7 +11,9 @@ import { Container, Loading } from "@nextui-org/react";
 // Auth
 import { getSession } from "next-auth/react";
 import { Fragment } from "react";
+
 import Header from "components/Header";
+import Feed from "components/Feed";
 
 const Home: NextPage = ({
   session,
@@ -19,15 +21,16 @@ const Home: NextPage = ({
   console.log(session);
 
   return (
-    <div>
+    <Fragment>
       {session ? (
-        <Fragment>
+        <Container css={{ padding: "$18 $0" }} fluid as="main">
           <Header {...session} />
-        </Fragment>
+          <Feed />
+        </Container>
       ) : (
         <Loading color="error" />
       )}
-    </div>
+    </Fragment>
   );
 };
 
