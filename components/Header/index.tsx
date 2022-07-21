@@ -9,6 +9,7 @@ const Header: NextComponentType = ({ user }: any) => {
         bordered
         name={user.name}
         src={user.image}
+        altText={user.name}
         description="Fullstack Developer @Crombie"
       />
     </HeaderContainer>

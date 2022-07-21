@@ -11,7 +11,7 @@ export const HeaderContainer = styled(Container, {
   padding: "$5 $10 $5 $4",
 
   // Glassmorphism background
-  backgroundColor: "rgba( 22, 24, 26, 0.85 )",
-  boxShadow: "rgb(0 0 0 / 37%) -1px 4px 20px 0px",
+  backgroundColor: "$backgroundContrast",
+  boxShadow: "$md",
   backdropFilter: "blur( 8px )",
 });

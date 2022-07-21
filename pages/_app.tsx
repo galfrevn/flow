@@ -7,6 +7,8 @@ import { ThemeProvider } from "next-themes";
 
 // Auth
 import { SessionProvider } from "next-auth/react";
+import { Fragment } from "react";
+import Head from "next/head";
 
 const lightTheme = createTheme({
   type: "light",
@@ -28,20 +30,29 @@ const darkTheme = createTheme({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider
-      defaultTheme="system"
-      attribute="class"
-      value={{
-        light: lightTheme.className,
-        dark: darkTheme.className,
-      }}
-    >
-      <NextUIProvider>
-        <SessionProvider>
-          <Component {...pageProps} />
-        </SessionProvider>
-      </NextUIProvider>
-    </ThemeProvider>
+    <Fragment>
+      <Head>
+        <title>SocialPWA</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="description" content="SocialPWA | Social media application made by Valentin Galfre" />
+        <meta name="keywords" content="social, media, application, made, by, valentin, galfre" />
+        <meta name="author" content="Valentín Galfré" />
+      </Head>
+      <ThemeProvider
+        defaultTheme="system"
+        attribute="class"
+        value={{
+          light: lightTheme.className,
+          dark: darkTheme.className,
+        }}
+      >
+        <NextUIProvider>
+          <SessionProvider>
+            <Component {...pageProps} />
+          </SessionProvider>
+        </NextUIProvider>
+      </ThemeProvider>
+    </Fragment>
   );
 }
 
