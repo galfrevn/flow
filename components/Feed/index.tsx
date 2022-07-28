@@ -1,29 +1,20 @@
-import { Container, Row, Spacer, Text } from "@nextui-org/react";
-import FeedCard from "components/FeedCard";
-import React from "react";
+import React, { FC, Fragment } from "react";
+import type { PostType } from "types/post";
 
-const Feed = () => {
+import { Container, Row, Spacer } from "@nextui-org/react";
+import FeedCard from "components/FeedCard";
+
+const Feed: FC<{ posts: PostType[] }> = ({ posts }) => {
   return (
     <Container css={{ p: "$20 0 $10 0" }}>
-      <Row>
-        <FeedCard />
-      </Row>
-      <Spacer y={1} />
-      <Row>
-        <FeedCard />
-      </Row>
-      <Spacer y={1} />
-      <Row>
-        <FeedCard />
-      </Row>
-      <Spacer y={1} />
-      <Row>
-        <FeedCard />
-      </Row>
-      <Spacer y={1} />
-      <Row>
-        <FeedCard />
-      </Row>
+      {posts.map((post: PostType) => (
+        <Fragment key={post._id}>
+          <Row>
+            <FeedCard {...post} />
+          </Row>
+          <Spacer y={1} />
+        </Fragment>
+      ))}
     </Container>
   );
 };

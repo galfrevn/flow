@@ -1,10 +1,19 @@
+import { FC } from "react";
+import { PostType } from "types/post";
 import { Col, Text, Grid, Container, User, Row } from "@nextui-org/react";
 import { Heart, MessageSquare, Pocket, Share } from "react-feather";
 
 // Important
 // #787F85 => $gray700 from @nextui-org/react
 
-const FeedCard = () => (
+const FeedCard: FC<PostType> = ({
+  content,
+  createdAt,
+  _id,
+  updatedAt,
+  user,
+  image,
+}) => (
   <Col as="article">
     <Container>
       <User size="sm" name="Valentín Galfré" css={{ paddingLeft: "$0" }}>
@@ -14,7 +23,7 @@ const FeedCard = () => (
     <Grid.Container css={{ borderBottom: "$accents1 solid 1px" }}>
       <Grid css={{ py: "$8", px: "$10" }}>
         <Text size={14} css={{ lineHeight: "$md", letterSpacing: "$normal" }}>
-          Make beautiful websites regardless of your design experience.
+          {content}
         </Text>
       </Grid>
       <Container>

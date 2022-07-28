@@ -7,7 +7,7 @@ import { getSession, signIn } from "next-auth/react";
 const Login: NextPage = () => {
   return (
     <Container>
-      <Button flat color="error" onClick={() => signIn("github")}>
+      <Button flat color="error" onPress={() => signIn("github")}>
         Sign in with Github
       </Button>
     </Container>
