@@ -14,14 +14,14 @@ export default NextAuth({
   ],
 
   // MongoDB Adapter
-  adapter: MongoDBAdapter(clientPromise, {
+  /* adapter: MongoDBAdapter(clientPromise, {
     collections: {
       Accounts: "accounts",
       Sessions: "sessions",
       Users: "users",
       VerificationTokens: "verificationTokens",
     },
-  }),
+  }), */
 
   secret: process.env.SECRET,
   session: { strategy: "jwt" },
