@@ -16,19 +16,15 @@ import Header from "components/Header";
 import Feed from "components/Feed";
 import AddPostButton from "components/AddPostButton";
 
-// Posts
-import Post from "models/post";
-
 const Home: NextPage = ({
   session,
-  posts,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <Fragment>
       {session ? (
         <main>
           <Header {...session} />
-          <Feed posts={posts} />
+          <Feed />
           <AddPostButton />
         </main>
       ) : (
@@ -43,8 +39,6 @@ export default Home;
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const session = await getSession(ctx);
 
-  const posts = await Post.find().sort("-createdAt").exec();
-
   if (!session)
     return {
       redirect: {
@@ -56,7 +50,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   return {
     props: {
       session,
-      posts: JSON.parse(JSON.stringify(posts)),
     },
   };
 };

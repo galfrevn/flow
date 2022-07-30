@@ -10,15 +10,19 @@ export default async function handler(
     const db = await connectDB();
     if (!db) res.status(500).send("Database connection failed");
 
-    const { user, content, image } = req.body;
-    const post = await Post.create({
-      content,
-      image,
-      user,
-    });
-    if (!post) res.status(500).send("Post creation failed");
+    const { _page, _limit } = req.query;
+    const page: number = _page ? parseInt(_page as string) : 1;
+    const limit: number = _limit ? parseInt(_limit as string) : 20;
 
-    res.status(201).json({ post });
+    const posts = await Post.find({})
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .sort({ createdAt: -1 })
+      .exec();
+
+    if (!posts) res.status(500).send("No post found");
+
+    res.status(201).json(posts);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }

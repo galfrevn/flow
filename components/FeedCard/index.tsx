@@ -1,7 +1,10 @@
 import { FC } from "react";
-import { PostType } from "types/post";
+import type { PostType } from "types/post";
+
 import { Col, Text, Grid, Container, User, Row } from "@nextui-org/react";
 import { Heart, MessageSquare, Pocket, Share } from "react-feather";
+
+import moment from "moment";
 
 // Important
 // #787F85 => $gray700 from @nextui-org/react
@@ -16,9 +19,15 @@ const FeedCard: FC<PostType> = ({
 }) => (
   <Col as="article">
     <Container>
-      <User size="sm" name="Valentín Galfré" css={{ paddingLeft: "$0" }}>
-        <User.Link href="https://galfrevn.netlify.app">@galfre.vn</User.Link>
-      </User>
+      <User
+        size="md"
+        bordered
+        description={moment(createdAt).fromNow()}
+        color="primary"
+        name={user}
+        src={image}
+        css={{ paddingLeft: "$0" }}
+      ></User>
     </Container>
     <Grid.Container css={{ borderBottom: "$accents1 solid 1px" }}>
       <Grid css={{ py: "$8", px: "$10" }}>
