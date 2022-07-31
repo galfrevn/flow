@@ -1,6 +1,6 @@
 import { User } from "@nextui-org/react";
 import { FC } from "react";
-import { UserType } from "types/post";
+import { UserType } from "types/user";
 import { HeaderContainer } from "./styles";
 
 const Header: FC<{ user: UserType }> = ({ user }) => {
