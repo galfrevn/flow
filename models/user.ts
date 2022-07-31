@@ -11,6 +11,7 @@ const userSchema = new Schema(
       required: true,
     },
     emailVerified: String,
+    description: { type: String, required: false, default: "Tell us about you..." }
   },
   { timestamps: true }
 );

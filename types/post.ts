@@ -1,16 +1,11 @@
-export interface UserType {
-  id: string;
-  name: string;
-  image: string;
-  email: string;
-  emailverified: boolean;
-}
+import type { UserType } from "types/user";
 
 export interface PostType {
   _id: string;
   user: UserType;
   image?: string;
   content: string;
+  likes: string[];
   createdAt: Date;
   updatedAt: Date;
 }

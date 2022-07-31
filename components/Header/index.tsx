@@ -1,8 +1,9 @@
 import { User } from "@nextui-org/react";
-import { NextComponentType } from "next";
+import { FC } from "react";
+import { UserType } from "types/post";
 import { HeaderContainer } from "./styles";
 
-const Header: NextComponentType = ({ user }: any) => {
+const Header: FC<{ user: UserType }> = ({ user }) => {
   return (
     <HeaderContainer as="header">
       <User
@@ -10,7 +11,7 @@ const Header: NextComponentType = ({ user }: any) => {
         name={user.name}
         src={user.image}
         altText={user.name}
-        description="Fullstack Developer @Crombie"
+        description={user.description}
       />
     </HeaderContainer>
   );

@@ -21,7 +21,6 @@ const postSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "User",
         required: false,
-        default: [],
       },
     ],
     comments: [
@@ -29,7 +28,6 @@ const postSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "Comment",
         required: false,
-        default: [],
       },
     ],
   },
