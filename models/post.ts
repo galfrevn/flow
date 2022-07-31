@@ -2,9 +2,36 @@ import { Schema, model, models } from "mongoose";
 
 const postSchema = new Schema(
   {
-    image: { required: false, type: String },
     content: { type: String, required: true },
-    user: { type: String, required: true },
+    user: {
+      id: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+      name: { type: String, required: true },
+      image: { type: String, required: true },
+    },
+    image: {
+      type: String,
+      required: false,
+    },
+    likes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: false,
+        default: [],
+      },
+    ],
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Comment",
+        required: false,
+        default: [],
+      },
+    ],
   },
   { timestamps: true }
 );

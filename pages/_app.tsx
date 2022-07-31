@@ -34,8 +34,14 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>SocialPWA</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta name="description" content="SocialPWA | Social media application made by Valentin Galfre" />
-        <meta name="keywords" content="social, media, application, made, by, valentin, galfre" />
+        <meta
+          name="description"
+          content="SocialPWA | Social media application made by Valentin Galfre"
+        />
+        <meta
+          name="keywords"
+          content="social, media, application, made, by, valentin, galfre"
+        />
         <meta name="author" content="Valentín Galfré" />
       </Head>
       <ThemeProvider

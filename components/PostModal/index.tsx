@@ -1,5 +1,12 @@
 import React, { FC } from "react";
-import { Modal, Button, Text, Textarea, Loading } from "@nextui-org/react";
+import {
+  Modal,
+  Button,
+  Text,
+  Textarea,
+  Loading,
+  Input,
+} from "@nextui-org/react";
 import usePostModal from "./usePostModal";
 
 const PostModal: FC<{
@@ -8,7 +15,8 @@ const PostModal: FC<{
     handleClose: () => void;
   };
 }> = ({ controls }) => {
-  const { loading, setContent, handleCreatePost } = usePostModal(controls);
+  const { loading, setContent, setImage, handleCreatePost } =
+    usePostModal(controls);
 
   return (
     <Modal
@@ -29,6 +37,12 @@ const PostModal: FC<{
           label="Write your thoughts"
           placeholder="Enter your amazing ideas."
           onChange={(e) => setContent(e.target.value)}
+        />
+        <Input
+          bordered
+          required
+          label="Upload an image"
+          onChange={(e) => setImage(e.target.value)}
         />
       </Modal.Body>
       <Modal.Footer>

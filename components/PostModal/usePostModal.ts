@@ -8,13 +8,12 @@ const usePostModal = (controls: { open: boolean; handleClose: () => void }) => {
 
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState("");
+  const [image, setImage] = useState("");
 
   const handleCreatePost = async () => {
     if (!content) {
       return;
     }
-
-    console.log(data);
 
     setLoading(true);
     const response = await fetch("/api/post/create", {
@@ -24,8 +23,12 @@ const usePostModal = (controls: { open: boolean; handleClose: () => void }) => {
       },
       body: JSON.stringify({
         content,
-        user: data?.user?.name,
-        image: data?.user?.image,
+        user: {
+          id: data?.user.id,
+          name: data?.user.name,
+          image: data?.user.image,
+        },
+        image,
       }),
     });
 
@@ -40,6 +43,7 @@ const usePostModal = (controls: { open: boolean; handleClose: () => void }) => {
   return {
     loading,
     setContent,
+    setImage,
     handleCreatePost,
   };
 };

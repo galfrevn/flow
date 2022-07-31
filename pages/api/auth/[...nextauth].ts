@@ -14,16 +14,23 @@ export default NextAuth({
   ],
 
   // MongoDB Adapter
-  adapter: MongoDBAdapter(clientPromise, {
-    collections: {
-      Accounts: "accounts",
-      Sessions: "sessions",
-      Users: "users",
-      VerificationTokens: "verificationTokens",
-    },
-  }),
+  adapter: MongoDBAdapter(clientPromise),
 
-  secret: process.env.SECRET,
+  callbacks: {
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        session.user.id = token.uid;
+      }
+      return session;
+    },
+    jwt: async ({ user, token }) => {
+      if (user) {
+        token.uid = user.id;
+      }
+      return token;
+    },
+  },
   session: { strategy: "jwt" },
+  secret: process.env.SECRET,
   jwt: { secret: process.env.SECRET },
 });

@@ -1,36 +1,51 @@
 import { FC } from "react";
 import type { PostType } from "types/post";
 
-import { Col, Text, Grid, Container, User, Row } from "@nextui-org/react";
-import { Heart, MessageSquare, Pocket, Share } from "react-feather";
+import {
+  Col,
+  Text,
+  Grid,
+  Container,
+  User,
+  Row,
+  Image,
+} from "@nextui-org/react";
+import {
+  Heart,
+  MessageSquare,
+  MoreVertical,
+  Pocket,
+  Share,
+} from "react-feather";
 
 import moment from "moment";
 
 // Important
 // #787F85 => $gray700 from @nextui-org/react
 
-const FeedCard: FC<PostType> = ({
-  content,
-  createdAt,
-  _id,
-  updatedAt,
-  user,
-  image,
-}) => (
+const FeedCard: FC<PostType> = ({ content, createdAt, user, image }) => (
   <Col as="article">
-    <Container>
+    <Container display="flex" justify="space-between" alignItems="center">
       <User
         size="md"
         bordered
         description={moment(createdAt).fromNow()}
-        color="primary"
-        name={user}
-        src={image}
+        name={user.name}
+        src={user.image}
         css={{ paddingLeft: "$0" }}
       ></User>
+      <MoreVertical size={14} />
     </Container>
     <Grid.Container css={{ borderBottom: "$accents1 solid 1px" }}>
       <Grid css={{ py: "$8", px: "$10" }}>
+        {image && (
+          <Image
+            alt={`${user.name}'s post`}
+            src={image as string}
+            css={{ borderRadius: "$sm", marginBottom: "$10" }}
+            showSkeleton
+          />
+        )}
         <Text size={14} css={{ lineHeight: "$md", letterSpacing: "$normal" }}>
           {content}
         </Text>

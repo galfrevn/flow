@@ -2,7 +2,8 @@ import { MongoClient } from "mongodb";
 import mongoose from "mongoose";
 
 // Function to connect to MongoDB with Mongoose
-export const connectDB = async () => mongoose.connect(process.env.MONGODB_URI as string);
+export const connectDB = async () =>
+  mongoose.connect(process.env.MONGODB_URI as string);
 
 if (!process.env.MONGODB_URI) {
   throw new Error("No MongoDB URI provided");
@@ -35,4 +36,3 @@ if (process.env.NODE_ENV === "development") {
 // Export a module-scoped MongoClient promise. By doing this in a
 // separate module, the client can be shared across functions.
 export default clientPromise;
-
