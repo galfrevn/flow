@@ -1,5 +1,6 @@
-import { FC, useState } from "react";
 import type { PostType } from "types/post";
+import { FC, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 import {
   Col,
@@ -21,10 +22,11 @@ import {
 import moment from "moment";
 import { IconContainer } from "./styles";
 import useLikePost from "./useLikePost";
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 // Important
 // #787F85 => $gray700 from @nextui-org/react
+// #F4256D => $red700 from @nextui-org/react
 
 const FeedCard: FC<PostType> = ({
   content,
@@ -35,16 +37,23 @@ const FeedCard: FC<PostType> = ({
   _id,
 }) => {
   const { data } = useSession();
+  const router = useRouter();
 
-  const [liked, setLiked] = useState(
-    likes.includes(data?.user?.id as string) ? true : false
-  );
+  const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(likes.length);
+
+  useEffect(() => {
+    likes.includes(data?.user?.id as string) && setLiked(true);
+  }, [liked]);
 
   const handleLike = (id: string) => {
     handleLikePost(id);
     setLiked(!liked);
     setLikesCount(likesCount + (liked ? -1 : 1));
+  };
+
+  const handleAddComment = (id: string) => {
+    router.push(`/post/${id}`);
   };
 
   const { handleLikePost, loading } = useLikePost();
@@ -78,26 +87,26 @@ const FeedCard: FC<PostType> = ({
         </Grid>
         <Container>
           <Row css={{ pb: "$8" }}>
-            <IconContainer span={3}>
+            <IconContainer span={3} onClick={() => handleAddComment(_id)}>
               <MessageSquare size={18} stroke="#787F85" />
               <Text size={12} color="$gray700">
-                1,432
+                0
               </Text>
             </IconContainer>
             <IconContainer span={3} onClick={() => handleLike(_id)}>
               <Heart
                 size={18}
-                stroke={liked ? "red" : "#787F85"}
-                fill={liked ? "red" : ""}
+                stroke={liked ? "#F4256D" : "#787F85"}
+                fill={liked ? "#F4256D" : ""}
               />
-              <Text size={12} color="$gray700">
+              <Text size={12} color={liked ? "$red700" : "$gray700"}>
                 {likesCount}
               </Text>
             </IconContainer>
-            <IconContainer span={2}>
+            <IconContainer span={3}>
               <Pocket size={18} stroke="#787F85" />
             </IconContainer>
-            <IconContainer span={2}>
+            <IconContainer span={3}>
               <Share size={18} stroke="#787F85" />
             </IconContainer>
           </Row>

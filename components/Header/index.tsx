@@ -1,11 +1,22 @@
-import { User } from "@nextui-org/react";
+// React, Types & Routing
+import type { UserType } from "types/user";
 import { FC } from "react";
-import { UserType } from "types/user";
-import { HeaderContainer } from "./styles";
+import { useRouter } from "next/router";
 
-const Header: FC<{ user: UserType }> = ({ user }) => {
+// Styling
+import { HeaderContainer } from "./styles";
+import { User } from "@nextui-org/react";
+import { ChevronLeft } from "react-feather";
+
+const Header: FC<{ user: UserType; withBackButton?: boolean }> = ({
+  user,
+  withBackButton = false,
+}) => {
+  const router = useRouter();
+
   return (
     <HeaderContainer as="header">
+      {withBackButton && <ChevronLeft onClick={() => router.back()} />}
       <User
         bordered
         name={user.name}
