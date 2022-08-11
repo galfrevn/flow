@@ -39,7 +39,7 @@ const PostPage: NextPage<{ post: PostType }> = ({ post }) => {
 export default PostPage;
 
 export async function getStaticPaths() {
-  const data = await fetch("http://localhost:3000/api/post/get").then((res) =>
+  const data = await fetch("/api/post/get").then((res) =>
     res.json()
   );
 
@@ -59,7 +59,7 @@ interface Params extends ParsedUrlQuery {
 
 export async function getStaticProps(ctx: GetStaticPropsContext<Params>) {
   const id = ctx.params?.id;
-  const data = await fetch(`http://localhost:3000/api/post/${id}`).then((res) =>
+  const data = await fetch(`/api/post/${id}`).then((res) =>
     res.json()
   );
   const post = data[0];
