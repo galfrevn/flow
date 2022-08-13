@@ -8,12 +8,9 @@ import {
   SocketData,
 } from "types/socket";
 
-export default function SocketHandler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default function SocketHandler(req: NextApiRequest, res: any) {
   // It means that socket server was already initialised
-  if (res.socket.server.io as any) {
+  if (res.socket.server.io) {
     console.log("Already set up");
     res.end();
     return;
@@ -24,7 +21,7 @@ export default function SocketHandler(
     ServerToClientEvents,
     InterServerEvents,
     SocketData
-  >(res.socket.server as any);
+  >(res.socket.server);
   res.socket.server.io = io;
 
   const onConnection = (socket: any) => {
