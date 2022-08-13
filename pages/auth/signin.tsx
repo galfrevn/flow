@@ -10,6 +10,9 @@ const Login: NextPage = () => {
       <Button flat color="error" onPress={() => signIn("github")}>
         Sign in with Github
       </Button>
+      <Button flat color="primary" onPress={() => signIn("discord")}>
+        Sign in with Discord
+      </Button>
     </Container>
   );
 };

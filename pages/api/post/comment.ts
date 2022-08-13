@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { connectDB } from "lib/mongodb";
 import Post from "models/post";
-import { CommentType } from "types/post";
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,16 +10,17 @@ export default async function handler(
     const db = await connectDB();
     if (!db) res.status(500).send("Database connection failed");
 
-    const { id } = req.query;
+    const { comment } = req.body;
+    const { _id } = req.query;
 
-    const post = await Post.findOne({ _id: id });
-    if (!post) res.status(500).send("No post found");
+    const post = await Post.findOne({
+      _id,
+    });
 
-    post.comments.sort(
-      (a: CommentType, b: CommentType) =>
-        b.createdAt.getTime() - a.createdAt.getTime()
-    );
-    res.status(201).json(post);
+    if (!post) res.status(404).send("Post not found");
+    await Post.findOneAndUpdate({ _id }, { $push: { comments: comment } });
+
+    res.status(200).send("Comment added");
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }

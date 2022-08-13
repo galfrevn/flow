@@ -10,8 +10,10 @@ export default async function handler(
     const db = await connectDB();
     if (!db) res.status(500).send("Database connection failed");
 
-    const user = await User.findOne({ id: req.query.id });
-    if (!user) res.status(500).send("User not found");
+    const { id } = req.query;
+
+    const user = await User.findOne({ id });
+    if (!user) res.status(404).send("User not found");
 
     res.status(201).json(user);
   } catch (error: any) {

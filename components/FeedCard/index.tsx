@@ -34,7 +34,9 @@ const FeedCard: FC<PostType> = ({
   user,
   image,
   likes,
+  comments,
   _id,
+  noButton,
 }) => {
   const { data } = useSession();
   const router = useRouter();
@@ -53,7 +55,7 @@ const FeedCard: FC<PostType> = ({
   };
 
   const handleAddComment = (id: string) => {
-    router.push(`/post/${id}`);
+    if (!noButton) router.push(`/post/${id}`);
   };
 
   const { handleLikePost, loading } = useLikePost();
@@ -90,14 +92,14 @@ const FeedCard: FC<PostType> = ({
             <IconContainer span={3} onClick={() => handleAddComment(_id)}>
               <MessageSquare size={18} stroke="#787F85" />
               <Text size={12} color="$gray700">
-                0
+                {comments.length}
               </Text>
             </IconContainer>
             <IconContainer span={3} onClick={() => handleLike(_id)}>
               <Heart
                 size={18}
                 stroke={liked ? "#F4256D" : "#787F85"}
-                fill={liked ? "#F4256D" : ""}
+                fill={liked ? "#F4256D" : "transparent"}
               />
               <Text size={12} color={liked ? "$red700" : "$gray700"}>
                 {likesCount}

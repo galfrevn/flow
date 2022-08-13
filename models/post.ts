@@ -20,14 +20,14 @@ const postSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: "User",
-        required: false,
+        required: true,
       },
     ],
     comments: [
       {
-        type: Schema.Types.ObjectId,
-        ref: "Comment",
-        required: false,
+        user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+        content: { type: String, required: true },
+        createdAt: { type: Date, default: Date.now },
       },
     ],
   },

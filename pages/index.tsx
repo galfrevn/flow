@@ -15,6 +15,7 @@ import { Fragment } from "react";
 import Header from "components/Header";
 import Feed from "components/Feed";
 import AddPostButton from "components/AddPostButton";
+import BottomNavigation from "components/BottomNavigation";
 
 const Home: NextPage = ({
   session,
@@ -26,6 +27,7 @@ const Home: NextPage = ({
           <Header {...session} />
           <Feed />
           <AddPostButton />
+          {/* <BottomNavigation /> */}
         </main>
       ) : (
         <Loading color="error" />
