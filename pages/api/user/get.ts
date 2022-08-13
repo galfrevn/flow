@@ -12,8 +12,9 @@ export default async function handler(
 
     const { id } = req.query;
 
-    const user = await User.findOne({ _id: id });
-    if (!user) res.status(404).send("User not found");
+
+    const user = await User.findOne({ _id: String(id) });
+    if (!user) res.status(500).send("User not found");
 
     res.status(201).json(user);
   } catch (error: any) {

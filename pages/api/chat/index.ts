@@ -25,7 +25,7 @@ export default function SocketHandler(
     InterServerEvents,
     SocketData
   >(res.socket.server as any);
-  res.socket.server.io as any = io;
+  res.socket.server.io = io;
 
   const onConnection = (socket: any) => {
     messageHandler(io, socket);

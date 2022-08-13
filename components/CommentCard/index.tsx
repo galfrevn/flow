@@ -9,11 +9,17 @@ type CommentCardType = {
   createdAt: Date;
   content: string;
   _id: string;
+  user: string;
 };
 
-const CommentCard: FC<CommentCardType> = ({ createdAt, content, _id }) => {
+const CommentCard: FC<CommentCardType> = ({
+  createdAt,
+  content,
+  _id,
+  user,
+}) => {
   const { data, isValidating, error } = useSWR(
-    `/api/user/get?id=${_id}`,
+    `/api/user/get?id=${user}`,
     fetcher
   );
 
@@ -41,7 +47,10 @@ const CommentCard: FC<CommentCardType> = ({ createdAt, content, _id }) => {
       </Container>
       <Grid.Container css={{ borderBottom: "$accents1 solid 1px" }}>
         <Grid css={{ pb: "$8", pt: "$2", px: "$10" }}>
-          <Text size={14} css={{ lineHeight: "$md", letterSpacing: "$normal", pl: "52px" }}>
+          <Text
+            size={14}
+            css={{ lineHeight: "$md", letterSpacing: "$normal", pl: "52px" }}
+          >
             {content}
           </Text>
         </Grid>

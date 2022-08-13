@@ -23,6 +23,7 @@ import moment from "moment";
 import { IconContainer } from "./styles";
 import useLikePost from "./useLikePost";
 import { useSession } from "next-auth/react";
+import type { KeyedMutator } from "swr";
 
 // Important
 // #787F85 => $gray700 from @nextui-org/react
@@ -38,15 +39,15 @@ const FeedCard: FC<PostType> = ({
   _id,
   noButton,
 }) => {
-  const { data } = useSession();
   const router = useRouter();
 
   const [liked, setLiked] = useState(false);
-  const [likesCount, setLikesCount] = useState(likes.length);
+  const [likesCount, setLikesCount] = useState(0);
 
   useEffect(() => {
-    likes.includes(data?.user?.id as string) && setLiked(true);
-  }, [liked]);
+    setLikesCount(likes.length);
+    likes.includes(user.id as string) ? setLiked(true) : setLiked(false);
+  }, []);
 
   const handleLike = (id: string) => {
     handleLikePost(id);
