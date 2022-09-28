@@ -4,7 +4,7 @@ import type {
   NextPage,
 } from "next";
 import { Fragment } from "react";
-import useComment from "./useComment";
+import useComment from "hooks/useComment";
 import { getSession } from "next-auth/react";
 
 // Components
