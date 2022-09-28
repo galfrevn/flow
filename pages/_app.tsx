@@ -1,5 +1,6 @@
 // NextJS, React & Types
 import type { AppProps } from "next/app";
+import { usePreserveScroll } from "hooks/usePreserveScroll";
 
 // Styling
 import { Fragment } from "react";
@@ -38,6 +39,9 @@ const themeProps: ThemeProviderProps = {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
+
+  usePreserveScroll();
+
   return (
     <Fragment>
       <ThemeProvider {...themeProps}>

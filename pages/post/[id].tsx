@@ -11,7 +11,7 @@ import { Fragment } from "react";
 import useSWR from "swr";
 import fetcher from "lib/fetcher";
 
-import { Col, Container, Loading, Row, Text } from "@nextui-org/react";
+import { Col, Container, Loading, Row } from "@nextui-org/react";
 
 import Header from "components/Header";
 import FeedCard from "components/FeedCard";

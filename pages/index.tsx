@@ -27,7 +27,7 @@ const Home: NextPage = ({
           <Header {...session} />
           <Feed />
           <AddPostButton />
-          {/* <BottomNavigation /> */}
+          <BottomNavigation />
         </main>
       ) : (
         <Loading color="error" />

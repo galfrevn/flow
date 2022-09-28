@@ -23,7 +23,6 @@ import moment from "moment";
 import { IconContainer } from "./styles";
 import useLikePost from "./useLikePost";
 import { useSession } from "next-auth/react";
-import type { KeyedMutator } from "swr";
 
 // Important
 // #787F85 => $gray700 from @nextui-org/react
@@ -40,13 +39,14 @@ const FeedCard: FC<PostType> = ({
   noButton,
 }) => {
   const router = useRouter();
+  const { data } = useSession();
 
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
 
   useEffect(() => {
     setLikesCount(likes.length);
-    likes.includes(user.id as string) ? setLiked(true) : setLiked(false);
+    likes.includes(data?.user.id as string) ? setLiked(true) : setLiked(false);
   }, []);
 
   const handleLike = (id: string) => {
@@ -70,7 +70,7 @@ const FeedCard: FC<PostType> = ({
           description={moment(createdAt).fromNow()}
           name={user.name}
           src={user.image}
-          css={{ paddingLeft: "$0" }}
+          css={{ paddingLeft: "$0", zIndex: "0" }}
         />
         <MoreVertical size={14} />
       </Container>

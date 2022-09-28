@@ -18,7 +18,7 @@ export default async function handler(
 
     post.comments.sort(
       (a: CommentType, b: CommentType) =>
-        b.createdAt.getTime() - a.createdAt.getTime()
+        a.createdAt.getTime() - b.createdAt.getTime()
     );
     res.status(201).json(post);
   } catch (error: any) {

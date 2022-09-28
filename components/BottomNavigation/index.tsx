@@ -9,7 +9,7 @@ import { NavigationContainer } from "./styles";
 const BottomNavigation = () => {
   const router = useRouter();
 
-  return <NavigationContainer as="header">aa</NavigationContainer>;
+  return <NavigationContainer as="nav">aa</NavigationContainer>;
 };
 
 export default BottomNavigation;

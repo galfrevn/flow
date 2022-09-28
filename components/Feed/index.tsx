@@ -45,7 +45,7 @@ const Feed = () => {
         color="primary"
         css={{ mt: "$10" }}
         disabled={isLoadingMore || isReachingEnd}
-        onClick={() => setSize(size + 1)}
+        onPress={() => setSize(size + 1)}
       >
         {isLoadingMore
           ? "Loading..."

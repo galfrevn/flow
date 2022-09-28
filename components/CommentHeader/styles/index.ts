@@ -8,9 +8,10 @@ export const HeaderContainer = styled(Container, {
   zIndex: "$1",
   display: "flex",
   alignItems: "center",
-  padding: "$5 $10 $5 $4",
+  padding: "$4 $8",
+  justifyContent: "space-between",
 
-  borderBottom: "$accents1 solid 1px",  
+  borderBottom: "$accents1 solid 1px",
 
   // Glassmorphism background
   backgroundColor: "$backgroundAlpha",

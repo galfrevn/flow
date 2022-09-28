@@ -11,7 +11,7 @@ export const NavigationContainer = styled(Container, {
   padding: "$5 $10 $5 $4",
 
   // Glassmorphism background
-  backgroundColor: "$backgroundContrast",
+  backgroundColor: "$backgroundAlpha",
   boxShadow: "$md",
   backdropFilter: "blur( 8px )",
 });
