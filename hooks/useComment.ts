@@ -6,7 +6,9 @@ import { useRouter } from "next/router";
 const useComment = () => {
   const { data } = useSession();
   const { mutate } = usePaginatePosts();
-  const { back } = useRouter();
+  const { back, query } = useRouter();
+
+  const { id } = query;
 
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState("");

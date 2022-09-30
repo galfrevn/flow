@@ -26,6 +26,17 @@ const darkTheme = createTheme({
     fonts: {
       sans: "Poppins, sans-serif",
     },
+    fontWeights: {
+      hairLine: 200,
+      thin: 300,
+      light: 400,
+      normal: 500,
+      medium: 600,
+      semibold: 600,
+      bold: 700,
+      extrabold: 800,
+      black: 900
+    }
   },
 });
 

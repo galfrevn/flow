@@ -5,7 +5,7 @@ export const HeaderContainer = styled(Container, {
   top: 0,
   left: 0,
   width: "100vw",
-  zIndex: "$1",
+  zIndex: "$2",
   display: "flex",
   alignItems: "center",
   padding: "$5 $10 $5 $4",
