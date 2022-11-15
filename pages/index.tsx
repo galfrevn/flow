@@ -21,6 +21,7 @@ const Home: NextPage = ({
   session,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
+    
     <Fragment>
       {session ? (
         <main>
@@ -40,6 +41,7 @@ export default Home;
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const session = await getSession(ctx);
+
 
   if (!session)
     return {

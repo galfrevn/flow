@@ -10,6 +10,7 @@ import {
   User,
   Row,
   Image,
+  Dropdown,
 } from "@nextui-org/react";
 import {
   Heart,
@@ -61,6 +62,9 @@ const FeedCard: FC<PostType> = ({
 
   const { handleLikePost, loading } = useLikePost();
 
+
+  console.log(user.id, data.user.id)
+
   return (
     <Col as="article">
       <Container display="flex" justify="space-between" alignItems="center">
@@ -72,7 +76,24 @@ const FeedCard: FC<PostType> = ({
           src={user.image}
           css={{ paddingLeft: "$0", zIndex: "0" }}
         />
-        <MoreVertical size={14} />
+
+        <Dropdown>
+          <Dropdown.Trigger>
+            <MoreVertical size={14} />
+          </Dropdown.Trigger>
+          <Dropdown.Menu color="secondary" >
+            {user.id !== data?.user.id ?
+              <Dropdown.Item key="settings" >
+                Chat with user
+              </Dropdown.Item> :
+              <Dropdown.Item key="logout" color="error" >
+                Delete post
+              </Dropdown.Item>
+            }
+          </Dropdown.Menu>
+        </Dropdown>
+
+
       </Container>
       <Grid.Container css={{ borderBottom: "$accents1 solid 1px" }}>
         <Grid css={{ py: "$8", px: "$10" }}>

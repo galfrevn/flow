@@ -1,18 +1,11 @@
-export interface ServerToClientEvents {
-  noArg: () => void;
-  basicEmit: (a: number, b: string, c: Buffer) => void;
-  withAck: (d: string, callback: (e: number) => void) => void;
-}
+import type { Server as NetServer, Socket } from "net";
+import type { NextApiResponse } from "next";
+import type { Server as SocketIOServer } from "socket.io";
 
-export interface ClientToServerEvents {
-  hello: () => void;
-}
-
-export interface InterServerEvents {
-  ping: () => void;
-}
-
-export interface SocketData {
-  name: string;
-  age: number;
-}
+export type NextApiResponseServerIO = NextApiResponse & {
+  socket: Socket & {
+    server: NetServer & {
+      io: SocketIOServer;
+    };
+  };
+};

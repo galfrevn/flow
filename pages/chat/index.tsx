@@ -1,122 +1,112 @@
-import io from "socket.io-client";
-import { useState, useEffect } from "react";
+import type { Message } from "types/chat";
+import type { GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from "next";
 
-let socket: any;
+import React, { useState, useEffect, useRef } from "react";
+import SocketIOClient from "socket.io-client";
+import { getSession } from "next-auth/react";
 
-type Message = {
-  author: string;
-  message: string;
-};
+const PATH = process.env.BASE_URL ?? "http://localhost:3000"
 
-export default function Home() {
-  const [username, setUsername] = useState("");
-  const [chosenUsername, setChosenUsername] = useState("");
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<Array<Message>>([]);
+const Chat: NextPage = ({ session }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const [connected, setConnected] = useState<boolean>(false);
+  const [chat, setChat] = useState<Message[]>([]);
+  const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
-    socketInitializer();
+    const socket = SocketIOClient.connect(PATH, {
+      path: "/api/chat/socketio",
+    });
+
+    socket.on("connect", () => {
+      console.log("🚀 Socket connected", socket.id);
+      setConnected(true);
+    });
+
+    socket.on("message", (message: Message) => {
+      chat.push(message);
+      setChat([...chat]);
+    });
+
+    if (socket) return () => socket.disconnect();
   }, []);
 
   const sendMessage = async () => {
-    socket.emit("createdMessage", { author: chosenUsername, message });
-    setMessages((currentMsg) => [
-      ...currentMsg,
-      { author: chosenUsername, message },
-    ]);
-    setMessage("");
-  };
+    if (message) {
+      const currentMessage: Message = {
+        username: session.user.name,
+        content: message,
+      };
 
-  const socketInitializer = async () => {
-    // We just call it because we don't need anything else out of it
-    await fetch("/api/chat");
+      const sendedMessage = await fetch("/api/chat/message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(currentMessage),
+      });
 
-    socket = io();
-
-    socket.on("newIncomingMessage", (msg: any) => {
-      setMessages((currentMsg) => [
-        ...currentMsg,
-        { author: msg.author, message: msg.message },
-      ]);
-      console.log(messages);
-    });
-  };
-
-  const handleKeypress = (e: any) => {
-    //it triggers by pressing the enter key
-    if (e.keyCode === 13) {
-      if (message) {
-        sendMessage();
-      }
+      if (sendedMessage.ok) setMessage("");
     }
+    inputRef?.current?.focus();
   };
 
   return (
-    <div className="flex items-center p-4 mx-auto min-h-screen justify-center bg-purple-500">
-      <main className="gap-4 flex flex-col items-center justify-center w-full h-full">
-        {!chosenUsername ? (
-          <>
-            <h3 className="font-bold text-white text-xl">
-              How people should call you?
-            </h3>
-            <input
-              type="text"
-              placeholder="Identity..."
-              value={username}
-              className="p-3 rounded-md outline-none"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <button
-              onClick={() => {
-                setChosenUsername(username);
-              }}
-              className="bg-white rounded-md px-4 py-2 text-xl"
-            >
-              Go!
-            </button>
-          </>
-        ) : (
-          <>
-            <p className="font-bold text-white text-xl">
-              Your username: {username}
-            </p>
-            <div className="flex flex-col justify-end bg-white h-[20rem] min-w-[33%] rounded-md shadow-md ">
-              <div className="h-full last:border-b-0 overflow-y-scroll">
-                {messages.map((msg, i) => {
-                  return (
-                    <div
-                      className="w-full py-1 px-2 border-b border-gray-200"
-                      key={i}
-                    >
-                      {msg.author} : {msg.message}
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="border-t border-gray-300 w-full flex rounded-bl-md">
-                <input
-                  type="text"
-                  placeholder="New message..."
-                  value={message}
-                  className="outline-none py-2 px-2 rounded-bl-md flex-1"
-                  onChange={(e) => setMessage(e.target.value)}
-                  onKeyUp={handleKeypress}
-                />
-                <div className="border-l border-gray-300 flex justify-center items-center  rounded-br-md group hover:bg-purple-500 transition-all">
-                  <button
-                    className="group-hover:text-white px-3 h-full"
-                    onClick={() => {
-                      sendMessage();
-                    }}
-                  >
-                    Send
-                  </button>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-      </main>
+    <div >
+
+      {chat.length ? (
+        chat.map((chat, index) => (
+          <div key={`message-${index}`}>
+            <span>
+              {chat.username === session.user.name ? "Me" : chat.username}
+            </span>
+            : {chat.content}
+          </div>
+        ))
+      ) : (
+        <div >
+          No chat messages
+        </div>
+      )}
+
+      <input
+        ref={inputRef}
+        type="text"
+        value={message}
+        placeholder={connected ? "Type a message..." : "Connecting..."}
+        disabled={!connected}
+        onChange={e => setMessage(e.target.value)}
+        onKeyPress={e => e.key === "Enter" && sendMessage()}
+      />
+
+      <button
+        onClick={sendMessage}
+        disabled={!connected}
+      >
+        SEND
+      </button>
+
     </div>
   );
-}
+};
+
+export default Chat
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const session = await getSession(ctx);
+
+  if (!session)
+    return {
+      redirect: {
+        destination: "/auth/signin",
+        permanent: false,
+      },
+    };
+
+  return {
+    props: {
+      session,
+    },
+  };
+};
