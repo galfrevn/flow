@@ -63,7 +63,7 @@ const FeedCard: FC<PostType> = ({
   const { handleLikePost, loading } = useLikePost();
 
 
-  console.log(user.id, data.user.id)
+  console.log(user.id, data?.user.id)
 
   return (
     <Col as="article">
