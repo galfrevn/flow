@@ -15,7 +15,7 @@ const Chat: NextPage = ({ session }: InferGetServerSidePropsType<typeof getServe
   const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
-    const socket = SocketIOClient.connect(PATH, {
+    const socket = (SocketIOClient as any).connect(PATH, {
       path: "/api/chat/socketio",
     });
 
