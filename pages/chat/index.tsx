@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from "react";
 import SocketIOClient from "socket.io-client";
 import { getSession } from "next-auth/react";
 
-const PATH = "https://social-pwa.vercel.app"
+const PATH = "https://social-pwa.vercel.app/"
 
 const Chat: NextPage = ({ session }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const inputRef = useRef<HTMLInputElement>(null);
