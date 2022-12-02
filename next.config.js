@@ -1,5 +1,5 @@
-/* @type {import('next').NextConfig} */
-/* const withPWA = require("next-pwa");
+/** @type {import('next').NextConfig} */
+const withPWA = require("next-pwa");
 
 module.exports = withPWA({
   reactStrictMode: true,
@@ -21,11 +21,6 @@ module.exports = withPWA({
       },
     ],
   },
-}); */
-
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-};
+});
 
 module.exports = nextConfig;
