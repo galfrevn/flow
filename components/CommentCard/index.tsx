@@ -1,8 +1,14 @@
-import { Col, Container, Grid, Loading, Text, User } from "@nextui-org/react";
+import {
+  Text,
+  User,
+  Card,
+  Loading,
+  Container,
+} from "@nextui-org/react";
+
 import fetcher from "lib/fetcher";
 import moment from "moment";
-import React, { FC } from "react";
-import { MoreVertical } from "react-feather";
+import React, { FC, memo } from "react";
 import useSWR from "swr";
 
 type CommentCardType = {
@@ -20,43 +26,49 @@ const CommentCard: FC<CommentCardType> = ({
 }) => {
   const { data, isValidating, error } = useSWR(
     `/api/user/get?id=${user}`,
-    fetcher
+    fetcher,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
   );
 
   if (isValidating)
     return (
       <Container display="flex" justify="center" css={{ p: "$20 $10" }}>
-        <Loading color="primary" />
+        <Loading color="error" />
       </Container>
     );
 
   if (error) return <div>Error</div>;
 
   return (
-    <Col as="article">
-      <Container display="flex" justify="space-between" alignItems="center">
+    <Card
+      isPressable
+      variant="bordered"
+      css={{ m: "$0 $8", bg: "$backgroundAlpha" }}
+    >
+      <Card.Header>
         <User
           size="md"
           bordered
+          pointer
           description={moment(createdAt).fromNow()}
           name={data.name}
           src={data.image}
-          css={{ paddingLeft: "$0", mt: "$6" }}
+          css={{ paddingLeft: "$0", zIndex: "0" }}
         />
-        <MoreVertical size={14} />
-      </Container>
-      <Grid.Container css={{ borderBottom: "$accents1 solid 1px" }}>
-        <Grid css={{ pb: "$8", pt: "$2", px: "$10" }}>
-          <Text
-            size={14}
-            css={{ lineHeight: "$md", letterSpacing: "$normal", pl: "52px" }}
-          >
-            {content}
-          </Text>
-        </Grid>
-      </Grid.Container>
-    </Col>
-  );
+      </Card.Header>
+
+      <Card.Body css={{ py: "$2", pb: "$8" }}>
+        <Text size={13} css={{ lineHeight: "$md", letterSpacing: "$normal" }}>
+          {content}
+        </Text>
+      </Card.Body>
+
+    </Card >
+  )
 };
 
-export default CommentCard;
+export default memo(CommentCard);

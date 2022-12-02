@@ -24,6 +24,7 @@ const CommentHeader: FC<CommentHeaderProps> = ({ content, loading, handleCreate 
       <Button
         flat
         rounded
+        color="error"
         css={{ width: "$5", px: "$3" }}
         onPress={handleCreate}
         disabled={content.length === 0 || loading}

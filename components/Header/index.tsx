@@ -1,6 +1,5 @@
 // React, Types & Routing
 import type { UserType } from "types/user";
-import { FC } from "react";
 import { useRouter } from "next/router";
 
 // Styling
@@ -8,21 +7,26 @@ import { HeaderContainer } from "./styles";
 import { User } from "@nextui-org/react";
 import { ChevronLeft } from "react-feather";
 
-const Header: FC<{ user: UserType; withBackButton?: boolean }> = ({
-  user,
-  withBackButton = false,
-}) => {
-  const router = useRouter();
+interface HeaderProps {
+  user: UserType;
+  withBackButton?: boolean;
+}
+
+const Header = ({ user, withBackButton = false }: HeaderProps) => {
+  const { push, back } = useRouter();
+  const { description, name, image, id } = user;
 
   return (
     <HeaderContainer as="header">
-      {withBackButton && <ChevronLeft onClick={() => router.back()} />}
+      {withBackButton && <ChevronLeft onClick={() => back()} />}
       <User
+        pointer
         bordered
-        name={user.name}
-        src={user.image}
-        altText={user.name}
-        description={user.description ?? "What are you thinking?"}
+        name={name}
+        src={image}
+        altText={name}
+        description={description ?? "What are you thinking?"}
+        onClick={() => push(`/user/${id}`)}
       />
     </HeaderContainer>
   );

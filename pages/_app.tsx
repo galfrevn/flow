@@ -10,6 +10,7 @@ import { createTheme, NextUIProvider } from "@nextui-org/react";
 
 // Auth
 import { SessionProvider } from "next-auth/react";
+import AppMainLayout from "layout/main";
 
 const lightTheme = createTheme({
   type: "light",
@@ -49,15 +50,13 @@ const themeProps: ThemeProviderProps = {
   },
 };
 
-function MyApp({ Component, pageProps }: AppProps) {
-
-  usePreserveScroll();
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
   return (
     <Fragment>
       <ThemeProvider {...themeProps}>
         <NextUIProvider>
-          <SessionProvider>
+          <SessionProvider session={session} >
             <Component {...pageProps} />
           </SessionProvider>
         </NextUIProvider>

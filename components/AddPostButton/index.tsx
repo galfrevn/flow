@@ -11,11 +11,11 @@ const AddPostButton: NextComponentType = () => {
     <Button
       auto
       flat
-      color="primary"
+      color="error"
       css={{
         position: "fixed",
         right: "$10",
-        bottom: "$10",
+        bottom: "$17",
         padding: "$0",
         borderRadius: "$rounded",
         height: "$17",

@@ -6,7 +6,6 @@ import {
   Container,
   Loading,
   Row,
-  Spacer,
   Text,
 } from "@nextui-org/react";
 
@@ -26,32 +25,30 @@ const Feed = () => {
   if (posts.length === 0)
     return (
       <Container display="flex" justify="center" css={{ p: "$20 $10" }}>
-        <Loading color="primary" />
+        <Loading color="error" />
       </Container>
     );
 
   return (
-    <Container display="flex" justify="center" css={{ p: "$20 0 $10 0" }}>
+    <Container display="flex" justify="center" css={{ p: "$20 0 $20 0" }}>
+
       {posts.map((post: PostType) => (
-        <Fragment key={post._id}>
-          <Row>
-            <FeedCard {...post} />
-          </Row>
-          <Spacer y={1} />
-        </Fragment>
+        <Row key={post._id} css={{ mb: "$8" }} >
+          <FeedCard {...post} />
+        </Row>
       ))}
 
       <Button
-        color="primary"
-        css={{ mt: "$10" }}
+        color="error"
+        css={{ mt: "$6" }}
         disabled={isLoadingMore || isReachingEnd}
         onPress={() => setSize(size + 1)}
       >
         {isLoadingMore
           ? "Loading..."
           : isReachingEnd
-          ? "No more posts"
-          : "Load more"}
+            ? "No more posts"
+            : "Load more"}
       </Button>
     </Container>
   );

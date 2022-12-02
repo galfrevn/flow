@@ -1,84 +1,66 @@
-import type {
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-  NextPage,
-} from "next";
+import type { GetServerSideProps, NextPage } from "next";
+import { getServerSession } from "lib/get-server-session";
 import { CommentType } from "types/post";
-import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { Fragment } from "react";
 
 import useSWR from "swr";
 import fetcher from "lib/fetcher";
 
-import { Col, Container, Loading, Row } from "@nextui-org/react";
+import { Container, Loading, Row, Text } from "@nextui-org/react";
 
-import Header from "components/Header";
 import FeedCard from "components/FeedCard";
 import CommentInput from "components/CommentInput";
 import CommentCard from "components/CommentCard";
+import AppMainLayout from "layout/main";
+import { usePreserveScroll } from "hooks/usePreserveScroll";
 
-const PostPage: NextPage = ({
-  session,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const PostPage: NextPage = () => {
+
   const router = useRouter();
   const { id } = router.query;
 
-  const { isValidating, data, error, mutate } = useSWR(
+  usePreserveScroll();
+
+  const { isValidating, data: post, mutate } = useSWR(
     `/api/post/${id}`,
-    fetcher
+    fetcher,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
   );
 
   if (isValidating) {
     return (
       <Container display="flex" justify="center" css={{ p: "$20 $10" }}>
-        <Loading color="primary" />
+        <Loading color="error" />
       </Container>
     );
   }
 
-  if (error) {
-    return <div>failed to load</div>;
-  }
-
   return (
-    <Fragment>
-      {session ? (
-        <main>
-          <Header withBackButton {...session} />
-          <Row css={{ mt: "$20" }}>
-            <FeedCard noButton {...data} />
+    <AppMainLayout>
+      <Container display="flex" css={{ p: "$20 0 $20 0" }}>
+
+        <FeedCard noButton {...post} />
+
+        <Text size={13} css={{ lineHeight: "$md", letterSpacing: "$normal", m: "$10 $8 $4 $8" }} >
+          {post?.comments?.length} Comments
+        </Text>
+
+        {post?.comments.map((comment: CommentType, index: number) => (
+          <Row key={comment._id} css={{ mb: "$4 " }} >
+            <CommentCard {...comment} key={index} />
           </Row>
-          <Col css={{ pb: "$28" }}>
-            {data?.comments.map((comment: CommentType, index: number) => (
-              <CommentCard {...comment} key={index} />
-            ))}
-          </Col>
-          <CommentInput postId={data._id} mutate={mutate} />
-        </main>
-      ) : (
-        <Loading color="error" />
-      )}
-    </Fragment>
+        ))}
+
+        <CommentInput postId={post?._id} mutate={mutate} />
+      </Container>
+    </AppMainLayout>
   );
 };
 
 export default PostPage;
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const session = await getSession(ctx);
-
-  if (!session)
-    return {
-      redirect: {
-        destination: "/auth/signin",
-        permanent: false,
-      },
-    };
-
-  return {
-    props: {
-      session,
-    },
-  };
-};
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => getServerSession({ req, res }) 

@@ -1,59 +1,22 @@
 // NextJS, React & Types
-import {
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-  NextPage,
-} from "next";
+import type { GetServerSideProps, NextPage } from "next";
+import { getServerSession } from "lib/get-server-session";
+import { usePreserveScroll } from "hooks/usePreserveScroll";
 
-// Styling
-import { Loading } from "@nextui-org/react";
-
-// Auth
-import { getSession } from "next-auth/react";
-import { Fragment } from "react";
-
-import Header from "components/Header";
 import Feed from "components/Feed";
-import AddPostButton from "components/AddPostButton";
-import BottomNavigation from "components/BottomNavigation";
+import AppMainLayout from "layout/main";
 
-const Home: NextPage = ({
-  session,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home: NextPage = () => {
+
+  usePreserveScroll();
+
   return (
-    
-    <Fragment>
-      {session ? (
-        <main>
-          <Header {...session} />
-          <Feed />
-          <AddPostButton />
-          {/* <BottomNavigation /> */}
-        </main>
-      ) : (
-        <Loading color="error" />
-      )}
-    </Fragment>
+    <AppMainLayout>
+      <Feed />
+    </AppMainLayout>
   );
 };
 
 export default Home;
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const session = await getSession(ctx);
-
-
-  if (!session)
-    return {
-      redirect: {
-        destination: "/auth/signin",
-        permanent: false,
-      },
-    };
-
-  return {
-    props: {
-      session,
-    },
-  };
-};
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => getServerSession({ req, res }) 

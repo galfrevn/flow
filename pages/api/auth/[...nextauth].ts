@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import DiscordProvider from "next-auth/providers/discord";
 
@@ -6,7 +6,7 @@ import DiscordProvider from "next-auth/providers/discord";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "lib/mongodb";
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID as string,
@@ -38,4 +38,6 @@ export default NextAuth({
   session: { strategy: "jwt" },
   secret: process.env.SECRET,
   jwt: { secret: process.env.SECRET },
-});
+};
+
+export default NextAuth(authOptions);

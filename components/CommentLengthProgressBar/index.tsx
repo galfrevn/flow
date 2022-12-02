@@ -6,7 +6,7 @@ import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 const CommentLengthProgressBar = ({ content }: { content: string }) => (
-    <Row css={{ width: "$10", height: "$10" }} >
+    <Row css={{ width: "$10", height: "$10" }} align="center" >
         <CircularProgressbar
             value={content.length}
             maxValue={100}

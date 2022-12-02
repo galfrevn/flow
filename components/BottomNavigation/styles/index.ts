@@ -7,8 +7,9 @@ export const NavigationContainer = styled(Container, {
   width: "100vw",
   zIndex: "$1",
   display: "flex",
+  justifyContent: 'space-around',
   alignItems: "center",
-  padding: "$5 $10 $5 $4",
+  padding: "$5 $8",
 
   // Glassmorphism background
   backgroundColor: "$backgroundAlpha",
