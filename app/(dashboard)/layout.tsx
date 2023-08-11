@@ -1,3 +1,5 @@
+import { getCurrentUser } from '@/lib/session';
+
 import { Logo } from '@/components/ui/icons/logo';
 
 import { dashboardRoutes } from '@/components/navigation/routes';
@@ -10,9 +12,14 @@ import { CreatePublicationButton } from '@/components/publication/button';
 
 import { RecommendationsSearcher } from '@/components/recommendations/searcher';
 import { RecommendationVerification } from '@/components/recommendations/verification';
+import { Box } from 'lucide-react';
 
 interface DashboardLayoutProps extends React.PropsWithChildren {}
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
+export default async function DashboardLayout({
+  children,
+}: DashboardLayoutProps) {
+  const user = await getCurrentUser();
+
   return (
     <section className='container flex'>
       <aside className='py-2 flex flex-col w-1/4 h-screen pr-8 justify-between'>
@@ -22,6 +29,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             {dashboardRoutes.map((route) => (
               <NavigationButton {...route} key={route.id} />
             ))}
+            <NavigationButton
+              id='profile'
+              icon={Box}
+              path={`/u/${user?.username}`}
+              label='My Profile'
+            />
           </div>
           <CreatePublicationButton />
         </nav>

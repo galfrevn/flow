@@ -5,8 +5,24 @@ import { Icons } from '@/components/ui/icons';
 import { Button } from '@nextui-org/button';
 import { Divider } from '@nextui-org/divider';
 
-interface UsernameLayoutProps extends React.PropsWithChildren {}
-export default function HomepageLayout({ children }: UsernameLayoutProps) {
+import { database } from '@/lib/database';
+import { notFound } from 'next/navigation';
+
+interface UsernameLayoutProps extends React.PropsWithChildren {
+  params: {
+    username: string;
+  };
+}
+export default async function UserLayout({
+  children,
+  params,
+}: UsernameLayoutProps) {
+  const user = await database.user.findUnique({
+    where: { username: params.username },
+  });
+
+  if (!user) return notFound();
+
   return (
     <section className='relative w-4/5'>
       <header className='p-2 flex items-center gap-4 bg-background/80 backdrop-blur-sm z-50 sticky top-0'>
@@ -15,9 +31,7 @@ export default function HomepageLayout({ children }: UsernameLayoutProps) {
         </Button>
 
         <div>
-          <h2 className='font-semibold text-lg leading-tight'>
-            Valentín Galfré
-          </h2>
+          <h2 className='font-semibold text-lg leading-tight'>{user.name}</h2>
           <p className='text-neutral-600 text-sm'>20k publications</p>
         </div>
       </header>

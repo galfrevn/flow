@@ -28,6 +28,8 @@ export const authenticationOptions: NextAuthOptions = {
         session.user.name = token.name;
         session.user.email = token.email;
         session.user.image = token.picture;
+        session.user.username = token.username;
+        session.user.onboarding = token.onboarding;
       }
 
       return session;
@@ -51,6 +53,8 @@ export const authenticationOptions: NextAuthOptions = {
         name: databaseSavedUser.name,
         email: databaseSavedUser.email,
         picture: databaseSavedUser.image,
+        onboarding: databaseSavedUser.onboarding,
+        username: databaseSavedUser.username,
       };
     },
   },

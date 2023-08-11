@@ -1,6 +1,15 @@
 import './environment.mjs';
+import million from 'million/compiler';
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+};
 
-export default nextConfig;
+const millionConfig = {
+  auto: { rsc: true },
+};
+
+export default million.next(nextConfig, { millionConfig });

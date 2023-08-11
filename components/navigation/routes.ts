@@ -1,4 +1,11 @@
-import { LayoutGrid, LucideIcon, Search, BellDot, Mail, BadgeCheck, User } from 'lucide-react';
+import {
+  LayoutGrid,
+  LucideIcon,
+  Search,
+  BellDot,
+  Mail,
+  BadgeCheck,
+} from 'lucide-react';
 
 export interface NavigationRoute {
   id: string;
@@ -37,11 +44,5 @@ export const dashboardRoutes: NavigationRoute[] = [
     path: '/verified',
     label: 'Verified',
     icon: BadgeCheck,
-  },
-  {
-    id: 'profile',
-    path: '/profile',
-    label: 'Profile',
-    icon: User,
   },
 ];
