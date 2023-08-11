@@ -3,9 +3,10 @@ import { Logo } from '@/components/ui/icons/logo';
 import { dashboardRoutes } from '@/components/navigation/routes';
 import { NavigationButton } from '@/components/navigation/button';
 
-import { Button } from '@nextui-org/button';
-import { User } from '@nextui-org/user';
 import { Divider } from '@nextui-org/divider';
+
+import { UserInformation } from '@/components/navigation/user';
+import { CreatePublicationButton } from '@/components/publication/button';
 
 import { RecommendationsSearcher } from '@/components/recommendations/searcher';
 import { RecommendationVerification } from '@/components/recommendations/verification';
@@ -19,34 +20,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           <Logo width={50} height={50} />
           <div className='my-4 inline-grid space-y-2 w-full'>
             {dashboardRoutes.map((route) => (
-              <NavigationButton {...route} />
+              <NavigationButton {...route} key={route.id} />
             ))}
           </div>
-
-          <Button
-            fullWidth
-            radius='full'
-            color='primary'
-            className='font-medium text-md'
-          >
-            Publish
-          </Button>
+          <CreatePublicationButton />
         </nav>
-
-        <Button
-          variant='light'
-          radius='full'
-          className='h-auto justify-start px-2'
-        >
-          <User
-            name='Valentín Galfré'
-            description='Technical Leader'
-            className='justify-start my-2'
-            avatarProps={{
-              src: 'https://pbs.twimg.com/profile_images/1292298512542171136/kZlAHkwR_normal.jpg',
-            }}
-          />
-        </Button>
+        <UserInformation />
       </aside>
       <Divider orientation='vertical' className='h-screen' />
 

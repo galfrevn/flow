@@ -2,7 +2,6 @@ import { Image } from '@nextui-org/image';
 import { Avatar } from '@nextui-org/avatar';
 
 export default async function Home({ params }: any) {
-
   /* const user = await getUser(params.username) */
 
   return (
@@ -20,7 +19,7 @@ export default async function Home({ params }: any) {
         />
       </div>
 
-      <div className='mt-20' >{params.username}</div>
+      <div className='mt-20'>{params.username}</div>
     </div>
   );
 }
