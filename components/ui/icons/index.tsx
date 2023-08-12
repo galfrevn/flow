@@ -2,8 +2,11 @@ import {
   ArrowLeft,
   BadgeCheck,
   Github,
+  Globe2,
   MoreHorizontal,
   Search,
+  Film,
+  Image
 } from 'lucide-react';
 
 export const Icons = {
@@ -12,4 +15,7 @@ export const Icons = {
   search: Search,
   github: Github,
   back: ArrowLeft,
+  globe: Globe2,
+  gif: Film,
+  image: Image
 };

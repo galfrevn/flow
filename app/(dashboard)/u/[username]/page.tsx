@@ -1,3 +1,6 @@
+import NextImage from 'next/image';
+import { notFound } from 'next/navigation';
+
 import { Image } from '@nextui-org/image';
 import { Avatar } from '@nextui-org/avatar';
 
@@ -16,10 +19,14 @@ export default async function UserPage({ params }: UserPageProps) {
     where: { username: params.username },
   });
 
+  if (!user) return notFound();
+
   return (
     <div className='w-full '>
       <div className='relative'>
         <Image
+          width='100%'
+          height={230}
           radius='none'
           src='https://pbs.twimg.com/profile_banners/1146924282922057728/1593995949/1500x500'
         />

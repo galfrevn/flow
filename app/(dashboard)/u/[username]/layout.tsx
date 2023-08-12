@@ -13,16 +13,7 @@ interface UsernameLayoutProps extends React.PropsWithChildren {
     username: string;
   };
 }
-export default async function UserLayout({
-  children,
-  params,
-}: UsernameLayoutProps) {
-  const user = await database.user.findUnique({
-    where: { username: params.username },
-  });
-
-  if (!user) return notFound();
-
+export default function UserLayout({ children, params }: UsernameLayoutProps) {
   return (
     <section className='relative w-4/5'>
       <header className='p-2 flex items-center gap-4 bg-background/80 backdrop-blur-sm z-50 sticky top-0'>
@@ -31,13 +22,15 @@ export default async function UserLayout({
         </Button>
 
         <div>
-          <h2 className='font-semibold text-lg leading-tight'>{user.name}</h2>
+          <h2 className='font-semibold text-lg leading-tight'>
+            {params.username}
+          </h2>
           <p className='text-neutral-600 text-sm'>20k publications</p>
         </div>
       </header>
       <Divider orientation='horizontal' />
 
-      <main className='scrollbar-hide pb-4 absolute top-0 h-screen overflow-y-scroll pt-14'>
+      <main className='w-full scrollbar-hide pb-4 absolute top-0 h-screen overflow-y-scroll pt-14'>
         {children}
       </main>
     </section>

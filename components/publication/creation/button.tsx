@@ -2,12 +2,13 @@ import Link from 'next/link';
 
 import { Button } from '@nextui-org/button';
 
-export function CreatePublicationButton() {
+export function PublicationCreationButton() {
   return (
     <Button
       fullWidth
       as={Link}
-      href='/p/create'
+      href='?publication=create'
+      scroll={false}
       radius='full'
       color='primary'
       className='font-medium text-md'

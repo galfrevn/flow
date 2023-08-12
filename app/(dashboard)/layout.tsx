@@ -1,5 +1,6 @@
 import { getCurrentUser } from '@/lib/session';
 
+import { Box } from 'lucide-react';
 import { Logo } from '@/components/ui/icons/logo';
 
 import { dashboardRoutes } from '@/components/navigation/routes';
@@ -8,13 +9,14 @@ import { NavigationButton } from '@/components/navigation/button';
 import { Divider } from '@nextui-org/divider';
 
 import { UserInformation } from '@/components/navigation/user';
-import { CreatePublicationButton } from '@/components/publication/button';
+import { PublicationCreationButton } from '@/components/publication/creation/button';
+import { PublicationCreationModal } from '@/components/publication/creation/modal';
 
 import { RecommendationsSearcher } from '@/components/recommendations/searcher';
 import { RecommendationVerification } from '@/components/recommendations/verification';
-import { Box } from 'lucide-react';
 
 interface DashboardLayoutProps extends React.PropsWithChildren {}
+
 export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
@@ -22,7 +24,7 @@ export default async function DashboardLayout({
 
   return (
     <section className='container flex'>
-      <aside className='py-2 flex flex-col w-1/4 h-screen pr-8 justify-between'>
+      <aside className='py-2 flex flex-col min-w-[240px] h-screen pr-8 justify-between'>
         <nav>
           <Logo width={50} height={50} />
           <div className='my-4 inline-grid space-y-2 w-full'>
@@ -36,12 +38,13 @@ export default async function DashboardLayout({
               label='My Profile'
             />
           </div>
-          <CreatePublicationButton />
+          <PublicationCreationButton />
         </nav>
         <UserInformation />
       </aside>
       <Divider orientation='vertical' className='h-screen' />
 
+      <PublicationCreationModal />
       {children}
 
       <Divider orientation='vertical' className='h-screen' />
