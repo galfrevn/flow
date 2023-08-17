@@ -11,9 +11,10 @@ export const environmentVariables = createEnv({
   },
   server: {
     DATABASE_URL: z.string().url(),
-
     NEXTAUTH_SECRET: z.string().min(1),
     GITHUB_CLIENT_ID: z.string().min(1),
     GITHUB_CLIENT_SECRET: z.string().min(1),
+    UPLOADTHING_SECRET: z.string().min(1),
+    UPLOADTHING_APP_ID: z.string().min(1),
   },
 });

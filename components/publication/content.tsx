@@ -13,13 +13,14 @@ type PublicationWithCreator = Publication & { creator: User };
 interface PublicationContentProps extends PublicationWithCreator {}
 
 export function PublicationContent({
+  id,
   createdAt,
   content,
   creator,
   media,
 }: PublicationContentProps) {
   return (
-    <div className="flex gap-4">
+    <Link href={`/p/${id}`} className="flex gap-4">
       <div className="flex flex-col">
         <Link href={`/u/${creator.username}`}>
           <Avatar isBordered src={String(creator.image)} />
@@ -36,7 +37,7 @@ export function PublicationContent({
         <p className="mt-2 max-w-lg">{content}</p>
         {Boolean(media[0].length) && <Image height={40} className="mt-4" src={media[0]} />}
       </div>
-    </div>
+    </Link>
   );
 }
 
@@ -48,7 +49,7 @@ interface PublicationCreatorNameProps {
   createdAt: Date;
 }
 
-function PublicationCreatorName({
+export function PublicationCreatorName({
   username,
   isVerified,
   completeName,

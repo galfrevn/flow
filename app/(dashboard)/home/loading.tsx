@@ -1,8 +1,13 @@
+import { Metadata } from "next";
 import { Fragment } from "react";
 
 import { Card, CardBody } from "@nextui-org/card";
 import { Skeleton } from "@nextui-org/skeleton";
 import { Divider } from "@nextui-org/divider";
+
+export const metadata: Metadata = {
+  title: 'Home'
+}
 
 export default function OnboardingPageSkeleton() {
   return (
@@ -21,7 +26,7 @@ export default function OnboardingPageSkeleton() {
                   </Skeleton>
                 </div>
                 <div className="w-full flex flex-col overflow-hidden">
-                  <Skeleton className="w-full rounded-lg">
+                  <Skeleton className="w-full rounded-lg mt-4">
                     <div className={"h-60 rounded-lg bg-default-100"}></div>
                   </Skeleton>
                 </div>

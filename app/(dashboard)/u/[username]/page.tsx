@@ -3,7 +3,6 @@ import dayjs from "dayjs";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 
-import { Image } from "@nextui-org/image";
 import { Avatar } from "@nextui-org/avatar";
 
 import { database } from "@/lib/database";
@@ -13,6 +12,7 @@ import { Divider } from "@nextui-org/divider";
 import { Chip } from "@nextui-org/chip";
 import { Tooltip } from "@nextui-org/tooltip";
 
+import { UserBackdrop } from "@/components/user/backdrop";
 import { PublicationBase } from "@/components/publication/base";
 import { PublicationContent } from "@/components/publication/content";
 import { PublicationSettings } from "@/components/publication/settings";
@@ -21,9 +21,23 @@ import {
   PublicationInteractionsSkeleton,
 } from "@/components/publication/interactions";
 
+export const dynamic = 'force-dynamic'
 interface UserPageProps {
   params: {
     username: string;
+  };
+}
+
+export async function generateMetadata({ params }: UserPageProps) {
+  const user = await database.user.findUnique({
+    where: { username: params.username },
+    select: { name: true, username: true },
+  });
+
+  if (!user) return notFound();
+
+  return {
+    title: `${user?.name} (@${user?.username})`,
   };
 }
 
@@ -38,13 +52,7 @@ export default async function UserPage({ params }: UserPageProps) {
   return (
     <div className="w-full ">
       <div className="relative">
-        <Image
-          width="100%"
-          height={230}
-          radius="none"
-          src={"https://pbs.twimg.com/profile_banners/1146924282922057728/1593995949/1500x500"}
-          alt={`${user?.name} backdrop image`}
-        />
+        <UserBackdrop user={user}  />
         <Avatar
           isBordered
           className="absolute -bottom-14 left-6 w-28 h-28"

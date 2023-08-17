@@ -1,23 +1,28 @@
 "use client";
 
-import { Toaster } from "sonner";
+import dynamic from "next/dynamic";
 
-import { NextUIProvider } from "@nextui-org/react";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 import { SessionProvider } from "next-auth/react";
+
+const NotificationsProvider = dynamic(() => import("sonner").then((mod) => mod.Toaster));
+
+const ComponentsProvider = dynamic(() =>
+  import("@nextui-org/react").then((mod) => mod.NextUIProvider)
+);
 
 const queryClient = new QueryClient();
 
 export function ThemeProvider({ children }: React.PropsWithChildren) {
   return (
     <>
-      <Toaster toastOptions={{ className: "font-sans" }} expand richColors />
-      <NextUIProvider>
+      <NotificationsProvider toastOptions={{ className: "font-sans" }} expand richColors />
+      <ComponentsProvider>
         <QueryClientProvider client={queryClient}>
           <SessionProvider>{children}</SessionProvider>
         </QueryClientProvider>
-      </NextUIProvider>
+      </ComponentsProvider>
     </>
   );
 }

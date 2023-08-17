@@ -6,20 +6,24 @@ import { authenticationOptions } from "@/lib/authentication";
 
 const routeContextSchema = z.object({
   params: z.object({
-    username: z.string(),
+    id: z.string(),
   }),
 });
 
 export async function GET(_request: Request, context: z.infer<typeof routeContextSchema>) {
   try {
     const { params } = routeContextSchema.parse(context);
-    const media = await database.publication.findMany({
-      where: { creator: { username: params.username } },
-      select: { media: true, id: true },
-      take: 4,
+
+    const raw = await database.publication.findUnique({
+      where: { id: params.id },
+      select: { creator: true },
     });
 
-    return new Response(JSON.stringify(media), { status: 200 });
+    if (!raw) {
+      return new Response(null, { status: 404 });
+    }
+
+    return new Response(JSON.stringify(raw.creator), { status: 200 });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 });

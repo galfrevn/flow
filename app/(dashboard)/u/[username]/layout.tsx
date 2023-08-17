@@ -6,6 +6,7 @@ interface UsernameLayoutProps extends React.PropsWithChildren {
     username: string;
   };
 }
+
 export default function UserLayout({ children, params }: UsernameLayoutProps) {
   return (
     <section className="relative w-4/5">

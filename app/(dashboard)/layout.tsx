@@ -15,6 +15,7 @@ import { PublicationCreationModal } from "@/components/publication/creation/moda
 import { RecommendationsSearcher } from "@/components/recommendations/searcher";
 import { RecommendationVerification } from "@/components/recommendations/verification";
 import { RecommendationUserMedia } from "@/components/recommendations/user-media";
+import { RecommendationUserInfomation } from "@/components/recommendations/user-info";
 
 interface DashboardLayoutProps extends React.PropsWithChildren {
   params: any;
@@ -52,6 +53,7 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
       <aside className="bg-background px-8 py-4 flex flex-col w-2/5 h-screen space-y-4">
         <RecommendationsSearcher />
         <RecommendationUserMedia />
+        <RecommendationUserInfomation />
         <RecommendationVerification />
       </aside>
     </section>

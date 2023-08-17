@@ -13,6 +13,7 @@ export function RecommendationUserMedia() {
 
   const { data: publications, isLoading } = useQuery({
     enabled: !!params.username,
+    refetchOnWindowFocus: false,
     queryKey: ["user", params.username, "media"],
     queryFn: () => fetch(`/api/user/${params.username}/media`).then((res) => res.json()),
   });
