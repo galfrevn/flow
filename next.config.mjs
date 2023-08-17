@@ -1,8 +1,11 @@
-import './environment.mjs';
-import million from 'million/compiler';
+import "./environment.mjs";
+import million from "million/compiler";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    serverActions: true,
+  },
   typescript: {
     ignoreBuildErrors: true,
   },

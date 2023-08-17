@@ -16,7 +16,7 @@ export function UserInformationActions({ children }: UserInformationActions) {
   const handleLogout = () => signOut({ callbackUrl: '/authentication/start' });
 
   return (
-    <Dropdown>
+    <Dropdown >
       <DropdownTrigger>{children}</DropdownTrigger>
       <DropdownMenu>
         <DropdownItem color='danger' onClick={handleLogout}>

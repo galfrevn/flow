@@ -58,7 +58,107 @@ model User {
   accounts Account[]
   sessions Session[]
 
+  publications   Publication[]
+  republications Republication[]
+  comments       Comment[]
+  likes          Like[]
+  bookmarks      Bookmark[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+
   @@map("users")
+}
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
+  HIDDEN
+}
+
+model Publication {
+  id String @id @default(cuid())
+
+  content String
+  media   String[]
+
+  visibility Visibility
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  creator   User   @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId String @map("creator_id")
+
+  republications Republication[]
+  comments       Comment[]
+
+  likes Like[]
+  bookmarks Bookmark[]
+
+  @@map("publications")
+}
+
+model Republication {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  creator   User   @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId String @map("creator_id")
+
+  publication   Publication @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+  publicationId String      @map("publication_id")
+
+  @@map("republications")
+}
+
+model Comment {
+  id String @id @default(cuid())
+
+  content String
+  media   String[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  creator   User   @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId String @map("creator_id")
+
+  publication   Publication @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+  publicationId String      @map("publication_id")
+
+  @@map("comments")
+}
+
+model Like {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
+
+  publication   Publication @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+  publicationId String      @map("publication_id")
+
+  @@map("likes")
+}
+
+model Bookmark {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
+
+  publication   Publication @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+  publicationId String      @map("publication_id")
+
+  @@map("bookmarks")
 }
 
 model VerificationToken {

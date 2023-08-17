@@ -6,7 +6,7 @@ interface HomepageLayoutProps extends React.PropsWithChildren {}
 export default function HomepageLayout({ children }: HomepageLayoutProps) {
   return (
     <section className='relative w-4/5'>
-      <header className='bg-background/80 backdrop-blur-sm z-50 sticky top-0'>
+      <header className='bg-background/80 backdrop-blur-md z-50 sticky top-0'>
         <div className='p-4'>
           <h2 className='font-medium text-xl'>Homepage</h2>
           <p className='text-neutral-600'>
@@ -22,7 +22,7 @@ export default function HomepageLayout({ children }: HomepageLayoutProps) {
         <Divider orientation='horizontal' />
       </header>
 
-      <main className='scrollbar-hide pb-4 absolute top-0 h-screen overflow-y-scroll pt-36'>
+      <main className='w-full scrollbar-hide pb-4 absolute top-0 h-screen overflow-y-scroll pt-36'>
         {children}
       </main>
     </section>

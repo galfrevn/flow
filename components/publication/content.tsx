@@ -1,58 +1,69 @@
-import Link from 'next/link';
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
-import { Avatar } from '@nextui-org/avatar';
-import { Icons } from '@/components/ui/icons';
+import { Publication, User } from "@prisma/client";
 
-interface PublicationContentProps {}
+import Link from "next/link";
 
-export function PublicationContent({}: PublicationContentProps) {
+import { Avatar } from "@nextui-org/avatar";
+import { Icons } from "@/components/ui/icons";
+import { Image } from "@nextui-org/image";
+
+type PublicationWithCreator = Publication & { creator: User };
+interface PublicationContentProps extends PublicationWithCreator {}
+
+export function PublicationContent({
+  createdAt,
+  content,
+  creator,
+  media,
+}: PublicationContentProps) {
   return (
-    <div className='flex gap-4'>
-      <div className='flex flex-col'>
-        <Link href='/u/galfrevn'>
-          <Avatar
-            isBordered
-            src='https://pbs.twimg.com/profile_images/1292298512542171136/kZlAHkwR_400x400.jpg'
-          />
+    <div className="flex gap-4">
+      <div className="flex flex-col">
+        <Link href={`/u/${creator.username}`}>
+          <Avatar isBordered src={String(creator.image)} />
         </Link>
       </div>
-      <div className='flex flex-col'>
+      <div className="flex flex-col overflow-hidden">
         <PublicationCreatorName
-          username='galfrevn'
-          completeName='Valentin Galfré'
-          isVerified={true}
+          username={creator.username || "unknown"}
+          completeName={creator.name || "Unknown"}
+          createdAt={createdAt}
+          isVerified={creator.verified}
         />
-        <p className='mt-2'>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. At mollitia
-          id deserunt illo numquam exercitationem cum ex optio maxime qui
-          consequatur consectetur nobis inventore totam earum reprehenderit
-          ducimus assumenda, quos pariatur! Excepturi, optio commodi cumque
-          illum quod eum corporis laudantium repellendus corrupti perspiciatis
-          quibusdam odio tempore dolorem, deleniti maiores sit.
-        </p>
+        {/* Using media[0] because we will handle multiple media sources in the future */}
+        <p className="mt-2 max-w-lg">{content}</p>
+        {Boolean(media[0].length) && <Image height={40} className="mt-4" src={media[0]} />}
       </div>
     </div>
   );
 }
 
+dayjs.extend(relativeTime);
 interface PublicationCreatorNameProps {
   username: string;
   isVerified: boolean;
   completeName: string;
+  createdAt: Date;
 }
 
 function PublicationCreatorName({
   username,
   isVerified,
   completeName,
+  createdAt,
 }: PublicationCreatorNameProps) {
   return (
-    <div className='flex items-center space-x-1'>
-      <Link href={`/u/${username}`} >
-        <h5 className='font-semibold hover:underline '>{completeName}</h5>
-      </Link>
-      {isVerified && <Icons.verification className='text-primary w-5 ' />}
-      <p className='text-gray-500'>@{username}</p>
+    <div>
+      <div className="flex items-center space-x-1">
+        <Link href={`/u/${username}`}>
+          <h5 className="font-semibold hover:underline leading-tight">{completeName}</h5>
+        </Link>
+        {isVerified && <Icons.verification className="text-primary w-5 " />}
+        <p className="text-gray-500 leading-tight">@{username}</p>
+      </div>
+      <p className="text-gray-500">Published {dayjs(createdAt).fromNow()}</p>
     </div>
   );
 }

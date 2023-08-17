@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import '@/components/ui/globals.css';
 import { ThemeProvider } from '@/components/ui/theme';
 
@@ -15,7 +17,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang='en' className='dark'>
       <body className={cn('font-sans', fontSans.variable)}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <Suspense>
+          <ThemeProvider>{children}</ThemeProvider>
+        </Suspense>
       </body>
     </html>
   );

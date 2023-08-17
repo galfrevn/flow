@@ -6,8 +6,14 @@ import {
   MoreHorizontal,
   Search,
   Film,
-  Image
-} from 'lucide-react';
+  Image,
+  X,
+  MessageCircle,
+  Heart,
+  Repeat2,
+  Bookmark,
+  CalendarDays,
+} from "lucide-react";
 
 export const Icons = {
   dots: MoreHorizontal,
@@ -17,5 +23,11 @@ export const Icons = {
   back: ArrowLeft,
   globe: Globe2,
   gif: Film,
-  image: Image
+  image: Image,
+  close: X,
+  comment: MessageCircle,
+  heart: Heart,
+  repeat: Repeat2,
+  bookmark: Bookmark,
+  calendar: CalendarDays
 };
