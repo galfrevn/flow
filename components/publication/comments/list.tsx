@@ -23,7 +23,7 @@ export async function PublicationComments({ id }: PublicationCommentsProps) {
   return (
     <div className="w-full">
       {comments.map((comment) => (
-        <PublicationBase hoverEffect={false}>
+        <PublicationBase key={comment.id} hoverEffect={false}>
           <div className="flex space-x-4">
             <header className="flex flex-col">
               <Link href={`/u/${comment.creator.username}`}>
