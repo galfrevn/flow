@@ -1,13 +1,12 @@
 import { database } from "@/lib/database";
 
-import { Publication, User } from "@prisma/client";
-
 import { Button } from "@nextui-org/button";
 import { Skeleton } from "@nextui-org/skeleton";
 import { Icons } from "@/components/ui/icons";
 
-type PublicationWithCreator = Publication & { creator: User };
-interface PublicationInteractionsProps extends PublicationWithCreator {}
+interface PublicationInteractionsProps {
+  id: string;
+}
 
 async function getInteractions(publicationId: string) {
   const where = { publication: { id: publicationId } };

@@ -5,7 +5,7 @@ interface PublicationLayoutProps extends React.PropsWithChildren {}
 
 export default function PublicationLayout({ children }: PublicationLayoutProps) {
   return (
-    <section className="relative w-4/5">
+    <section className="relative w-full lg:w-4/5">
       <header className="p-2 flex items-center gap-4 bg-background/80 backdrop-blur-sm z-50 sticky top-0">
         <BackButton />
 

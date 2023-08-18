@@ -20,11 +20,9 @@ export function PublicationContent({
   media,
 }: PublicationContentProps) {
   return (
-    <Link href={`/p/${id}`} className="flex gap-4">
+    <div className="flex gap-4">
       <div className="flex flex-col">
-        <Link href={`/u/${creator.username}`}>
-          <Avatar isBordered src={String(creator.image)} />
-        </Link>
+        <Avatar isBordered src={String(creator.image)} className="w-10 h-10" />
       </div>
       <div className="flex flex-col overflow-hidden">
         <PublicationCreatorName
@@ -33,11 +31,15 @@ export function PublicationContent({
           createdAt={createdAt}
           isVerified={creator.verified}
         />
-        {/* Using media[0] because we will handle multiple media sources in the future */}
-        <p className="mt-2 max-w-lg">{content}</p>
-        {Boolean(media[0].length) && <Image height={40} className="mt-4" src={media[0]} />}
+        <Link href={`/p/${id}`}>
+          {/* Using media[0] because we will handle multiple media sources in the future */}
+          <p className="mt-2 max-w-lg">{content}</p>
+          {Boolean(media[0].length) && (
+            <Image height={270} className="mt-4 w-full h-[270px]" src={media[0]} />
+          )}
+        </Link>
       </div>
-    </Link>
+    </div>
   );
 }
 

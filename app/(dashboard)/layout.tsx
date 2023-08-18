@@ -4,12 +4,16 @@ import { Box } from "lucide-react";
 import { Logo } from "@/components/ui/icons/logo";
 
 import { dashboardRoutes } from "@/components/navigation/routes";
-import { NavigationButton } from "@/components/navigation/button";
+import { MiddleSizeNavigationButton, NavigationButton } from "@/components/navigation/button";
 
 import { Divider } from "@nextui-org/divider";
 
 import { UserInformation } from "@/components/navigation/user";
-import { PublicationCreationButton } from "@/components/publication/creation/button";
+import {
+  MiddleSizePublicationCreationButton,
+  PublicationCreationButton,
+} from "@/components/publication/creation/button";
+import { MiddleSizeLogoutButton } from "@/components/navigation/logout/button";
 import { PublicationCreationModal } from "@/components/publication/creation/modal";
 
 import { RecommendationsSearcher } from "@/components/recommendations/searcher";
@@ -25,8 +29,8 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
   const user = await getCurrentUser();
 
   return (
-    <section className="container flex">
-      <aside className="py-2 flex flex-col min-w-[240px] h-screen pr-8 justify-between">
+    <section className="px-0 sm:px-2 lg:container flex">
+      <aside className="py-2 hidden lg:flex flex-col max-w-[240px] min-w-[240px] h-screen pr-8 justify-between">
         <nav>
           <Logo width={50} height={50} />
           <div className="my-4 inline-grid space-y-2 w-full">
@@ -44,13 +48,34 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
         </nav>
         <UserInformation />
       </aside>
-      <Divider orientation="vertical" className="h-screen" />
+
+      {/* Middle size navigation */}
+      <aside className="py-2 hidden sm:flex lg:hidden flex-col max-w-[80px] min-w-[80px] pr-4 h-screen justify-between">
+        <nav className="flex flex-col items-center">
+          <Logo width={50} height={50} />
+          <div className="my-4 inline-grid justify-center space-y-3 w-full">
+            {dashboardRoutes.map((route) => (
+              <MiddleSizeNavigationButton key={route.id} {...route} />
+            ))}
+            <MiddleSizeNavigationButton
+              label="My Profile"
+              id="profile"
+              icon={Box}
+              path={`/u/${user?.username}`}
+            />
+          </div>
+          <MiddleSizePublicationCreationButton />
+        </nav>
+        <MiddleSizeLogoutButton />
+      </aside>
+
+      <Divider orientation="vertical" className="hidden sm:block h-screen" />
 
       <PublicationCreationModal />
       {children}
 
-      <Divider orientation="vertical" className="h-screen" />
-      <aside className="bg-background px-8 py-4 flex flex-col w-2/5 h-screen space-y-4">
+      <Divider orientation="vertical" className="h-screen hidden xl:block" />
+      <aside className="bg-background px-8 py-4 hidden xl:flex flex-col w-2/5 h-screen space-y-4">
         <RecommendationsSearcher />
         <RecommendationUserMedia />
         <RecommendationUserInfomation />

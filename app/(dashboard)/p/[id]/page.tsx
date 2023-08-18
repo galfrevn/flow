@@ -1,4 +1,3 @@
-
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 
@@ -13,6 +12,12 @@ import {
   PublicationInteractionsSkeleton,
 } from "@/components/publication/interactions";
 
+import { PublicationCommentCreator } from "@/components/publication/comments/creator";
+import {
+  PublicationComments,
+  PublicationCommentsSkeleton,
+} from "@/components/publication/comments/list";
+
 interface PublicationPageProps {
   params: {
     id: string;
@@ -22,7 +27,7 @@ interface PublicationPageProps {
 export default async function PublicationPage({ params }: PublicationPageProps) {
   const publication = await database.publication.findUnique({
     where: { id: params.id },
-    include: { creator: true },
+    include: { creator: true, comments: true },
   });
 
   if (!publication) return notFound();
@@ -30,14 +35,17 @@ export default async function PublicationPage({ params }: PublicationPageProps) 
   return (
     <div>
       <Divider orientation="horizontal" />
-      <PublicationBase key={publication.id}>
+      <PublicationBase hoverEffect={false} key={publication.id}>
         <PublicationContent {...publication} />
         <PublicationSettings {...publication} />
         <Suspense fallback={<PublicationInteractionsSkeleton />}>
-          <PublicationInteractions {...publication} />
+          <PublicationInteractions id={publication.id} />
         </Suspense>
       </PublicationBase>
-      <Divider orientation="horizontal" />
+      <PublicationCommentCreator />
+      <Suspense fallback={<PublicationCommentsSkeleton />}>
+        <PublicationComments id={publication.id} />
+      </Suspense>
     </div>
   );
 }

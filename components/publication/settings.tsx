@@ -38,7 +38,6 @@ export function PublicationSettings({ creator, id }: PublicationSettingsProps) {
           <Button
             className="absolute top-3 right-3"
             isIconOnly
-            color="primary"
             variant="light"
             radius="full"
           >

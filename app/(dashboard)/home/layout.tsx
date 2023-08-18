@@ -5,7 +5,7 @@ import { Divider, Tab, Tabs } from '@nextui-org/react';
 interface HomepageLayoutProps extends React.PropsWithChildren {}
 export default function HomepageLayout({ children }: HomepageLayoutProps) {
   return (
-    <section className='relative w-4/5'>
+    <section className='relative w-full lg:w-4/5'>
       <header className='bg-background/80 backdrop-blur-md z-50 sticky top-0'>
         <div className='p-4'>
           <h2 className='font-medium text-xl'>Homepage</h2>

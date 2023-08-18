@@ -1,13 +1,8 @@
-import { Metadata } from "next";
 import { Fragment } from "react";
 
 import { Card, CardBody } from "@nextui-org/card";
 import { Skeleton } from "@nextui-org/skeleton";
 import { Divider } from "@nextui-org/divider";
-
-export const metadata: Metadata = {
-  title: 'Home'
-}
 
 export default function OnboardingPageSkeleton() {
   return (

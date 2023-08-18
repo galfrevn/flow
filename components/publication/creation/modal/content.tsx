@@ -34,7 +34,6 @@ export function PublicationCreationModalContent() {
 
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   const handleClosePublicationModal = () => router.replace(pathname, { scroll: false });
 
