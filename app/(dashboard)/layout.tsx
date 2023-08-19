@@ -29,7 +29,7 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
   const user = await getCurrentUser();
 
   return (
-    <section className="px-0 sm:px-2 lg:container flex">
+    <section className="px-0 sm:px-2 max-w-[1400px] lg:pl-8 md:pr-0 xl:px-8 w-full mx-auto flex ">
       <aside className="py-2 hidden lg:flex flex-col max-w-[240px] min-w-[240px] h-screen pr-8 justify-between">
         <nav>
           <Logo width={50} height={50} />

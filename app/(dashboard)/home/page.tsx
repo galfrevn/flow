@@ -31,6 +31,24 @@ export default async function Homepage() {
           </Suspense>
         </PublicationBase>
       ))}
+      {publications.map((publication) => (
+        <PublicationBase key={publication.id}>
+          <PublicationContent {...publication} />
+          <PublicationSettings {...publication} />
+          <Suspense fallback={<PublicationInteractionsSkeleton />} >
+            <PublicationInteractions {...publication} />
+          </Suspense>
+        </PublicationBase>
+      ))}
+      {publications.map((publication) => (
+        <PublicationBase key={publication.id}>
+          <PublicationContent {...publication} />
+          <PublicationSettings {...publication} />
+          <Suspense fallback={<PublicationInteractionsSkeleton />} >
+            <PublicationInteractions {...publication} />
+          </Suspense>
+        </PublicationBase>
+      ))}
     </div>
   );
 }

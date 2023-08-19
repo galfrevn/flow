@@ -35,7 +35,7 @@ export function PublicationContent({
           {/* Using media[0] because we will handle multiple media sources in the future */}
           <p className="mt-2 max-w-lg">{content}</p>
           {Boolean(media[0].length) && (
-            <Image height={270} className="mt-4 w-full h-[270px]" src={media[0]} />
+            <Image height={270} className="mt-4 w-full" src={media[0]} />
           )}
         </Link>
       </div>

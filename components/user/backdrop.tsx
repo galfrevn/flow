@@ -27,7 +27,6 @@ export function UserBackdrop({ user }: UserBackdropProps) {
     <div className="relative">
       <Image
         width="100%"
-        isBlurred
         height={230}
         radius="none"
         className="min-h-[230px] max-h-[230px] bg-contain object-cover bg-center"

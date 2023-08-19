@@ -104,7 +104,7 @@ export default async function UserPage({ params }: UserPageProps) {
           <PublicationContent {...publication} creator={user} />
           <PublicationSettings {...publication} creator={user} />
           <Suspense fallback={<PublicationInteractionsSkeleton />}>
-            <PublicationInteractions {...publication} creator={user} />
+            <PublicationInteractions id={publication.id} />
           </Suspense>
         </PublicationBase>
       ))}

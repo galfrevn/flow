@@ -16,7 +16,7 @@ export const MiddleSizeLogoutButton = () => {
         radius="full"
         variant="flat"
         color="danger"
-        className="justify-center"
+        className="justify-center ml-4"
         onClick={handleLogout}
       >
         <Icons.close />
