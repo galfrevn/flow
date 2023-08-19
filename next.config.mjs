@@ -1,5 +1,6 @@
 import "./environment.mjs";
 import million from "million/compiler";
+import pwa from "next-pwa";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -15,4 +16,10 @@ const millionConfig = {
   auto: { rsc: true },
 };
 
-export default million.next(nextConfig, { millionConfig });
+const progressiveApp = pwa({
+  dest: "public",
+  register: true,
+  disable: process.env.NODE_ENV === "development",
+});
+
+export default progressiveApp(million.next(nextConfig, { millionConfig }));

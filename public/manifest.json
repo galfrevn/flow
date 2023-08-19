@@ -1,0 +1,32 @@
+{
+    "theme_color": "#000000",
+    "background_color": "6726D1",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/",
+    "name": "Flow Inc",
+    "short_name": "Flow",
+    "description": "Connect, share, and thrive with our innovative social network application. Join a vibrant community, express yourself through posts and multimedia, and forge meaningful connections like never before. Discover new friendships and engage in compelling conversations on a platform designed for your social journey. Download now and experience the next level of online interaction.",
+    "icons": [
+        {
+            "src": "/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

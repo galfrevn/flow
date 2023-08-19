@@ -20,6 +20,8 @@ export const metadata: Metadata = {
   },
   colorScheme: "dark",
   themeColor: "#000000",
+  manifest: '/manifest.json',
+  icons: { apple: '/icon.png' }
 };
 
 interface RootLayoutProps extends React.PropsWithChildren {}
